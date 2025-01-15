@@ -46,7 +46,10 @@ a {
   align-items: center;
   justify-content: center;
 }
-
+.container._dark{
+  background-color:#062c2d88;
+  color:#fff;
+}
 .wrapper {
   width: 338px;
   margin: 0 auto;

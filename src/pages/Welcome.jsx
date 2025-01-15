@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Header from "../components/Header";
 import { AppLabel } from "../components/AppLable";
 import { AppButton } from "../components/AppButton";
 import { logDOM } from "@testing-library/react";
 import { useNavigate } from "react-router-dom";
+import { ThemeContex, themes } from "../contexts/themeContexts";
 
 const Welcome = () => {
+  const {theme, toggleTheme}= useContext(ThemeContex);
+
  // Регулярные выражения 
  const RegTell = /^\+?[1-9]\d{1,14}$/
  const RegName = /^[A-Za-zА-Яа-я]+$/
@@ -53,9 +56,14 @@ const Welcome = () => {
 
 
   return (
-    <div className="container">
+    <div className={`container ${ theme === themes.dark && "_dark"}`}>
       <div className="wrapper">
         <div className="welcome">
+          <AppButton
+            buttonType="button"
+            buttonText={theme=== themes.dark ? "Темная тема" : "Светлая тема"}
+            btnClick={toggleTheme}
+          />
         <Header
           headerText={"Добро пожаловать в квиз от лучшего учебного центра"}
           textHeader="h1" 

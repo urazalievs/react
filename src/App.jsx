@@ -5,6 +5,7 @@ import StepTwo from "./pages/StepTwo";
 import StepThree from "./pages/StepThree";
 import StepFour from "./pages/StepFour";
 import Thanks from "./pages/Thanks"
+import { ThemesProvider } from "./contexts/themeProvider";
  
 import "./styles/main.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -40,10 +41,11 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <RouterProvider router={router}>
-      <div className="App"/>
-    </RouterProvider>
-      
+    <ThemesProvider>
+      <RouterProvider router={router}>
+        <div className="App"/>
+      </RouterProvider>
+    </ThemesProvider>
   );
 };
 
