@@ -343,6 +343,16 @@ button:enabled:active {
 .thanks h1 {
   margin-bottom: 32px;
 }
+.endLi{
+  font-size: 20px;
+}
+.endLi span{
+  color: #a497f9;
+  font-size: 23px;
+}
+.endUl{
+  margin: 0 0 20px 20px;
+}
 .thanks p {
   font-size: 18px;
   text-align: center;

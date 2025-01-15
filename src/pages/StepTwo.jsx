@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressBar } from "../components/ProgressBar";
 import { AnswerItem } from "../components/AnswerItem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AppButton } from "../components/AppButton";
 
 const StepTwo = () => {
   const variantsLi = [
@@ -22,24 +23,20 @@ const StepTwo = () => {
       labelText:"FulStack"
     },
   ]
+
+  // Инпут
+  const [checkedAnswer, setCheckedAnswer]= useState('')
+  //Навигация
+  const navig = useNavigate()
+
+  useEffect(()=>{
+    const userIn = {...JSON.parse(localStorage.getItem("userInfo")),checkedName:checkedAnswer, };
+    localStorage.setItem("userInfo", JSON.stringify(userIn))
+  },[checkedAnswer])
   return (
     <div className="container">
       <div className="wrapper">
         <div className="variants-quiz">
-          {/* <div className="indicator">
-            <div className="indicator__text">
-              <span className="indicator__description">
-                Скидка за прохождение опроса:
-              </span>
-              <span className="indicator__value">15%</span>
-            </div>
-            <div className="indicator__progressbar">
-              <div className="indicator__unit indicator__unit-1 _active"></div>
-              <div className="indicator__unit indicator__unit-2"></div>
-              <div className="indicator__unit indicator__unit-3"></div>
-              <div className="indicator__unit indicator__unit-4"></div>
-            </div>
-          </div> */}
           <ProgressBar 
             idNum="15%"
             idText="Скидка за прохождение опроса:"
@@ -53,31 +50,17 @@ const StepTwo = () => {
                   key={elem.id}
                   answName={elem.labelText}
                   answVariant={elem.id}
+                  onChange={()=>{setCheckedAnswer(elem.labelText)}}
+                  checked= {checkedAnswer === elem.labelText}
                 />
               })}
-              {/* <li className="variant-wrapper">
-                <input required type="radio" name="variant-1" id="variant-1" />
-                <label htmlFor="variant-1">Ваш ответ</label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant-2" id="variant-2" />
-                <label htmlFor="variant-2">Ваш ответ</label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant-3" id="variant-3" />
-                <label htmlFor="variant-3">Ваш ответ</label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant-4" id="variant-4" />
-                <label htmlFor="variant-4">Ваш ответ</label>
-              </li> */}
             </ul>
-            <Link to={'/step-three'}>
-            <button type="button"  id="next-btn">
-              Далее
-            </button>
-            </Link>
-            
+            <AppButton
+                buttonText="Далее"
+                buttonType="button"
+                isDisabled={!checkedAnswer}
+                btnClick={()=>navig("/step-three")}
+            />
           </div>
         </div>
       </div>

@@ -1,56 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressBar } from "../components/ProgressBar";
 import { AnswerStepThree } from "../components/AnswerStepThree";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AppButton } from "../components/AppButton";
+import Header from "../components/Header";
 
 const StepThree = () => {
   const backEndThree = [
     {
       img:"./img/laugh.png",
-      text:"Ваш ответ 1",
+      text:"Очень просто",
       variant:"variant-1"
     },
     {
       img:"./img/hearts.png",
-      text:"Ваш ответ 2",
+      text:"Люблю трудности",
       variant:"variant-2"
     },
     {
       img:"./img/smirk.png",
-      text:"Ваш ответ 3",
+      text:"Готов к труднястям",
       variant:"variant-3"
     },
     {
       img:"./img/fright.png",
-      text:"Ваш ответ 4",
+      text:"Очень страшно думать об этом",
       variant:"variant-4"
     },
   ]
+  const navigator = useNavigate()
+  const [checkedEmogi, setCheckedEmogi]= useState("")
+
+  useEffect(()=>{
+    const userinn = {...JSON.parse(localStorage.getItem("userInfo")),checkedEmogi};
+    localStorage.setItem("userInfo", JSON.stringify(userinn))
+  },[checkedEmogi])
   return (
     <div className="container">
       <div className="wrapper">
         <div className="emoji-quiz">
-          {/* <div className="indicator">
-            <div className="indicator__text">
-              <span className="indicator__description">
-                Скидка за прохождение опроса:
-              </span>
-              <span className="indicator__value">15%</span>
-            </div>
-            <div className="indicator__progressbar">
-              <div className="indicator__unit indicator__unit-1 _active"></div>
-              <div className="indicator__unit indicator__unit-2 _active"></div>
-              <div className="indicator__unit indicator__unit-3"></div>
-              <div className="indicator__unit indicator__unit-4"></div>
-            </div>
-          </div> */}
           <ProgressBar
             idNum="15%"
             idText="Скидка за прохождение опроса:"
             current={2}
           />
           <div className="question">
-            <h2>3. Занимательный вопрос</h2>
+            <Header headerText="Ваша реакция на новое или сложное?"/>
             <ul className="emoji-variants">
               {backEndThree.map((e,i)=>{
                 return <AnswerStepThree
@@ -58,14 +53,17 @@ const StepThree = () => {
                     threeImg={e.img}
                     threeText={e.text}
                     threeVar={e.variant}
+                    onChange={()=>setCheckedEmogi(e.text)}
+                    checked={checkedEmogi=== e.text}
                 />
               })}
             </ul>
-            <Link to="/step-foure">
-            <button type="button"  id="next-btn">
-              Далее
-            </button>
-            </Link>
+            <AppButton
+              btnClick={()=>navigator("/step-foure")}
+              buttonText="Далее"
+              buttonType="button"
+              isDisabled={!checkedEmogi}
+            />
           </div>
         </div>
       </div>

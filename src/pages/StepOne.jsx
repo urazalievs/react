@@ -4,6 +4,7 @@ import { QuestionDiv } from "../components/QuestionDiv";
 import { AppLabel } from "../components/AppLable";
 import { AppButton } from "../components/AppButton";
 import { useNavigate } from "react-router-dom";
+import Header  from "../components/Header"
 
 const StepOne = () => {
   //Ловит значение инпута
@@ -13,6 +14,9 @@ const StepOne = () => {
   //Показывает наличие ошибки
   const [nameErr, setNameErr]= useState(false)
   const navigation = useNavigate()
+
+  //Открывает и добавляет в LocalStoreg
+  
   const handClick = ()=>{
     if(!name){
       setBtnErr(true)
@@ -22,6 +26,8 @@ const StepOne = () => {
       setBtnErr(false)
       setNameErr(false)
       navigation("/step-two")
+      const course = {...JSON.parse(localStorage.getItem("userInfo")),from:name}
+      localStorage.setItem("userInfo", JSON.stringify(course))
     }
   }
   useEffect(()=>{
@@ -42,7 +48,7 @@ const StepOne = () => {
             current={0}
           />
           <div className="question">
-            <h2>1. Занимательный вопрос</h2>
+            <Header headerText="Откуда вы узнали о нас?" textHeader="h2"/>  
             <AppLabel
               labText=''
               labName="answer"
